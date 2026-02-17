@@ -27,17 +27,20 @@ jobs:
       - name: Build rootfs
         run: make rootfs
 
-      - name: Create plugin
-        run: make create
-        env:
-          PLUGIN_TAG: ${{ env.VERSION }}
+      - name: Create plugin with version tag
+        run: |
+          docker plugin rm -f ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }} || true
+          docker plugin create ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }} ./plugin
+
+      - name: Create plugin with latest tag
+        run: |
+          docker plugin rm -f ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest || true
+          docker plugin create ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest ./plugin
 
       - name: Push plugin
         run: |
           docker plugin push ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }}
           docker plugin push ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest
-        env:
-          PLUGIN_TAG: ${{ env.VERSION }}
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
