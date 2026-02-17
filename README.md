@@ -21,7 +21,7 @@ Once these conditions are met you are ready to install the plugin.
 
 The plugin is simple use and can be installed as a Docker container without having to install any other system dependencies.
 
-    $ docker plugin install --alias seaweedfs katharostech/seaweedfs-volume-plugin HOST=localhost:8888
+    $ docker plugin install --alias seaweedfs cyr-ius/seaweedfs-volume-plugin HOST=localhost:8888
 
 Docker will prompt asking if you want to grant the permissions required to run the plugin. Select yes and the plugin will download and install.
 
@@ -73,8 +73,8 @@ Each SeaweedFS Docker volume maps 1-to-1 to a directory on the SeaweedFS filesys
 
 It is also possible, if you have multiple SeaweedFS clusters, to install the plugin multiple times with different settings for the different clusters. For example, if you have two SeaweedFS clusters, one at `host1` and another at `host2`, you can install the plugin two times, with different aliases, to allow you to create volumes on both clusters.
 
-    $ docker plugin install --alias seaweedfs1 --grant-all-permissions katharostech/seaweedfs-volume-plugin HOST=host1:8888
-    $ docker plugin install --alias seaweedfs2 --grant-all-permissions kadimasolutions/seaweedfs-volume-plugin HOST=host2:8888
+    $ docker plugin install --alias seaweedfs1 --grant-all-permissions cyr-ius/seaweedfs-volume-plugin HOST=host1:8888
+    $ docker plugin install --alias seaweedfs2 --grant-all-permissions cyr-ius/seaweedfs-volume-plugin HOST=host2:8888
 
 This gives you the ability to create volumes for both clusters by specifying either `seaweedfs1` or `seaweedfs2` as the volume driver when creating a volume.
 
@@ -90,7 +90,7 @@ The Root Volume also give you the ability to have containers create and remove S
 
 ### Plugin Configuration
 
-You can configure the plugin through plugin variables. You may set these variables at installation time by putting `VARIABLE_NAME=value` after the plugin name, or you can set them after the plugin has been installed using `docker plugin set katharostech/seaweedfs-volume-plugin VARIABLE_NAME=value`.
+You can configure the plugin through plugin variables. You may set these variables at installation time by putting `VARIABLE_NAME=value` after the plugin name, or you can set them after the plugin has been installed using `docker plugin set cyr-ius/seaweedfs-volume-plugin VARIABLE_NAME=value`.
 
 > **Note:** When configuring the plugin after installation, the plugin must first be disabled before you can set variables. There is no danger of accidentally setting variables while the plugin is enabled, though. Docker will simply tell you that it is not possible.
 
@@ -100,7 +100,7 @@ The hostname/ip address and port that will be used when connecting to the Seawee
 
 > **Note:** The plugin runs in `host` networking mode. This means that even though it is in a container, it shares its network configuration with the host and should resolve all network addresses as the host system would.
 
-**Default:** `localhost:8080`
+**Default:** `localhost:8888`
 
 #### MOUNT_OPTIONS
 
@@ -211,7 +211,7 @@ When you install a Docker plugin, it is given a plugin ID. You can see the first
 ```
 $ docker plugin ls
 ID                  NAME                                            DESCRIPTION                         ENABLED
-2f5b68535b92        katharostech/seaweedfs-volume-plugin:latest   SeaweedFS volume plugin for Docker   false
+2f5b68535b92        cyr-ius/seaweedfs-volume-plugin:latest   SeaweedFS volume plugin for Docker   false
 ```
 
 Using that ID you can find where the plugin's rootfs was installed. By default, it should be located in `/var/lib/docker/plugins/[pluginID]/rootfs`. For our particular plugin, the file that we need to replace is the `/project/index.js` file in the plugin's rootfs. By replacing that file with an updated version and restarting ( disabling and re-enabling ) the plugin, you can update the plugin without having to re-install it.
