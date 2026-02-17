@@ -1,4 +1,5 @@
-PLUGIN_NAME = cyr-ius/seaweedfs-volume-plugin
+PLUGIN_NAME = seaweedfs-volume-plugin
+PLUGIN_USER = cyr-ius
 PLUGIN_TAG ?= latest
 PRIVATE_REGISTRY ?= localhost:5000
 GITHUB_REGISTRY = ghcr.io
