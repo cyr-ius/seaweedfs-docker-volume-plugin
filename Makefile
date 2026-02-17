@@ -44,9 +44,9 @@ login:
 	@echo ${GITHUB_TOKEN} | docker login ${GITHUB_REGISTRY} -u ${GITHUB_USER} --password-stdin
 
 push: login
-	@echo "### tag plugin for ghcr.io"
-	@docker plugin push ${GITHUB_REGISTRY}/${PLUGIN_NAME}:${VERSION}
-	@docker plugin push ${GITHUB_REGISTRY}/${PLUGIN_NAME}:latest
+	@echo "### push plugin to ghcr.io"
+	@docker plugin push ${GITHUB_REGISTRY}/${PLUGIN_USER}/${PLUGIN_NAME}:${VERSION}
+	@docker plugin push ${GITHUB_REGISTRY}/${PLUGIN_USER}/${PLUGIN_NAME}:latest
 
 release: all push
 	@echo "### create GitHub release v${VERSION}"
