@@ -1,4 +1,4 @@
-PLUGIN_NAME = katharostech/seaweedfs-volume-plugin
+PLUGIN_NAME = cyr-ius/seaweedfs-volume-plugin
 PLUGIN_TAG ?= rootfs
 PRIVATE_REGISTRY ?= localhost:5000
 
