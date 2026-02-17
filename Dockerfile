@@ -13,7 +13,7 @@ RUN apk update && \
     apk add fuse3 && \
     apk add fuse && \
     apk add --no-cache --virtual build-dependencies --update wget curl ca-certificates && \
-    wget -qO /tmp/linux_${GOARCH}.tar.gz https://github.com/chrislusf/seaweedfs/releases/download/${SEAWEEDFS_VERSION}/linux_${GOARCH}.tar.gz && \
+    wget -qO /tmp/linux_${GOARCH}.tar.gz https://github.com/seaweedfs/seaweedfs/releases/download/${SEAWEEDFS_VERSION}/linux_${GOARCH}.tar.gz && \
     tar -C /usr/bin/ -xzvf /tmp/linux_${GOARCH}.tar.gz && \
     apk del build-dependencies && \
     rm -rf /tmp/*
