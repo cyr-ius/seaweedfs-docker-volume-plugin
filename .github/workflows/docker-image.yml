@@ -1,18 +1,32 @@
-name: Docker Image CI
+name: Build and Release Plugin
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - 'v*'
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag cyr-ius/seaweedfs-plugin-volume:$(date +%s)
+      - uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build rootfs
+        run: make rootfs
+
+      - name: Create plugin
+        run: make create
+
+      - name: Push plugin
+        run: |
+          docker plugin push ghcr.io/${{ github.repository_owner }}/mon-plugin:latest
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./plugin/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
