@@ -22,7 +22,7 @@ jobs:
 
       - name: Push plugin
         run: |
-          docker plugin push ghcr.io/${{ github.repository_owner }}/mon-plugin:latest
+          docker plugin push ghcr.io/${{ github.repository_owner }}/cyr-ius/seaweedfs-volume-plugin:latest
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
