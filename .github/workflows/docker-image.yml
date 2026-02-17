@@ -32,14 +32,21 @@ jobs:
           docker plugin rm -f ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }} || true
           docker plugin create ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }} ./plugin
 
+      - name: Push plugin with version tag
+        run: |
+          docker plugin push ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }}
+
+      - name: Remove plugin before recreating as latest
+        run: |
+          docker plugin rm -f ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }} || true
+
       - name: Create plugin with latest tag
         run: |
           docker plugin rm -f ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest || true
           docker plugin create ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest ./plugin
 
-      - name: Push plugin
+      - name: Push plugin with latest tag
         run: |
-          docker plugin push ghcr.io/cyr-ius/seaweedfs-volume-plugin:${{ env.VERSION }}
           docker plugin push ghcr.io/cyr-ius/seaweedfs-volume-plugin:latest
 
       - name: Create GitHub Release
